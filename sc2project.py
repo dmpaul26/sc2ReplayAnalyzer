@@ -14,9 +14,9 @@ def initPlayerInfo(frame):
 def initGameInfo(frame):
     gameInfoFrame = Frame(frame)
     gameInfoFrame.pack(side=LEFT)
+
     minimapImage = PhotoImage(file='./sc2map.gif')
     mapLabel = Label(gameInfoFrame, image=minimapImage, height=200)
-    mapLabel.image = minimapImage
     mapLabel.pack(side=TOP)
 
     gameInfo = Label(gameInfoFrame, text="Game Info", fg="white", bg="red")
