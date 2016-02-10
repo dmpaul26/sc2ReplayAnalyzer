@@ -12,6 +12,8 @@ def initPlayerInfo(frame):
     playerTwoInfo.pack(side=RIGHT, fill=BOTH, expand=YES)
 
 def initGameInfo(frame):
+    gameInfoFrame = Frame(frame)
+    gameInfoFrame.pack(side=LEFT)
     minimapImage = PhotoImage(file='./sc2map.gif')
     mapLabel = Label(gameInfoFrame, image=minimapImage, height=200)
     mapLabel.image = minimapImage
@@ -21,33 +23,27 @@ def initGameInfo(frame):
     gameInfo.pack(side=BOTTOM, fill=Y, expand=YES)
 
 def initHeader(frame):
-    initMapView(frame)
+    initGameInfo(frame)
+    initPlayerInfo(frame)
+
+def initMenubar(frame, filemenu):
+    filemenu.add_command(label="Open Replay")
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=myGUI.quit)
+    menubar.add_cascade(label="File", menu=filemenu)
 
 myGUI = Tk()
 myGUI.geometry('1024x768')
 
 menubar = Menu(myGUI)
 filemenu = Menu(menubar, tearoff=0)
-filemenu.add_command(label="Open Replay")
-filemenu.add_separator()
-filemenu.add_command(label="Exit", command=myGUI.quit)
-menubar.add_cascade(label="File", menu=filemenu)
+
+initMenubar(myGUI, filemenu)
 
 header=Frame(myGUI)
 header.pack(side=TOP, fill=X)
 
-gameInfoFrame = Frame(header)
-gameInfoFrame.pack(side=LEFT)
-
-minimapImage = PhotoImage(file='./sc2map.gif')
-mapLabel = Label(gameInfoFrame, image=minimapImage, height=200)
-mapLabel.image = minimapImage
-mapLabel.pack(side=TOP)
-
-gameInfo = Label(gameInfoFrame, text="Game Info", fg="white", bg="red")
-gameInfo.pack(side=BOTTOM, fill=Y, expand=YES)
-
-initPlayerInfo(header)
+initHeader(header)
 
 graph = Label(myGUI, text="graph", fg="white", bg="blue")
 graph.pack(side=LEFT, fill=BOTH, expand=YES)
