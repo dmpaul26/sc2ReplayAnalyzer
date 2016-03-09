@@ -1,60 +1,9 @@
 import sys
 from Tkinter import *
+from TkHandler import *
 
-def initPlayerInfo(frame):
-    playerInfo = Frame(frame)
-    playerInfo.pack(side=RIGHT, fill=BOTH, expand=YES)
+programState = 2
 
-    playerOneInfo = Label(playerInfo, text="Player One Info", fg="white", bg="brown")
-    playerOneInfo.pack(side=LEFT, fill=BOTH, expand=YES)
+myHandler = TkHandler()
 
-    playerTwoInfo = Label(playerInfo, text="Player Two Info", fg="white", bg="brown")
-    playerTwoInfo.pack(side=RIGHT, fill=BOTH, expand=YES)
-
-def initGameInfo(frame):
-    gameInfoFrame = Frame(frame)
-    gameInfoFrame.pack(side=LEFT)
-
-    minimapImage = PhotoImage(file='./sc2map.gif')
-    mapLabel = Label(gameInfoFrame, image=minimapImage, height=200)
-    mapLabel.pack(side=TOP)
-
-    gameInfo = Label(gameInfoFrame, text="Game Info", fg="white", bg="red")
-    gameInfo.pack(side=BOTTOM, fill=Y, expand=YES)
-
-def initHeader(frame):
-    initGameInfo(frame)
-    initPlayerInfo(frame)
-
-def initMenubar(frame, filemenu):
-    filemenu.add_command(label="Open Replay")
-    filemenu.add_separator()
-    filemenu.add_command(label="Exit", command=myGUI.quit)
-    menubar.add_cascade(label="File", menu=filemenu)
-
-myGUI = Tk()
-myGUI.geometry('1024x768')
-
-menubar = Menu(myGUI)
-filemenu = Menu(menubar, tearoff=0)
-
-initMenubar(myGUI, filemenu)
-
-header=Frame(myGUI)
-header.pack(side=TOP, fill=X)
-
-initHeader(header)
-
-graph = Label(myGUI, text="graph", fg="white", bg="blue")
-graph.pack(side=LEFT, fill=BOTH, expand=YES)
-
-scrollbar = Scrollbar(myGUI)
-scrollbar.pack(side=RIGHT, fill=Y)
-
-scrollStats = Listbox(myGUI, activestyle='none', fg="white", bg="brown", yscrollcommand=scrollbar.set, width = 50)
-scrollStats.insert(END, "APM = 55")
-scrollStats.pack(side=RIGHT, fill=Y)
-myGUI.config(menu=menubar)
-
-myGUI.mainloop()
-
+myHandler.myGUI.mainloop()
