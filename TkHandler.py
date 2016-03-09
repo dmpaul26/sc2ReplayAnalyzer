@@ -21,17 +21,31 @@ class TkHandler():
 
 # Loads replay file
     def loadReplay(self):
-        fileDialog = tkFileDialog.askopenfilename(self.myGUI)
-        fileDialog.pack()
+        file_opt = {'defaultextension': '.SC2Replay',
+                    'filetypes': [('SC2Replay', '.SC2Replay')]} #add initial dir from config file
 
-        userID = 
-        self.replayImporter = ReplayImporter(userID)
-        try:
-            url = "https://gg2-matchblobs-prod.s3.amazonaws.com/" + matchID
+        fileDialog = tkFileDialog.askopenfilename(**file_opt)
 
-#       match
-        self.replay = sc2reader.load_replay('SC2Replay.SC2replay')
-        self.processReplay()
+        if fileDialog:
+            self.replay = sc2reader.load_replay(fileDialog)
+
+            self.processReplay()
+
+    def getReplay(self):
+        self.promptID = Toplevel(self.myGUI)
+
+        Label(self.promptID, text="Enter GGTracker user ID:").pack()
+
+        self.userEntry = Entry(self.promptID)
+        self.userEntry.pack(padx=5)
+
+        Button(self.promptID, text="Ok", command=self.getUserID).pack(pady=5)
+        Button(self.promptID, text="Cancel", command=self.promptID.destroy).pack()
+
+    def getUserID(self):
+        self.userID = self.userEntry.get()
+        self.promptID.destroy()
+        print self.userID
 
 # Gathers info from replay
     def processReplay(self):
@@ -102,7 +116,8 @@ class TkHandler():
         self.initPlayerInfo()
 
     def initMenubar(self):
-        self.filemenu.add_command(label="Open Replay", command=self.loadReplay)
+        self.filemenu.add_command(label="Load Replay", command=self.loadReplay)
+        self.filemenu.add_command(label="Import From GGTracker", command=self.getReplay)
         self.filemenu.add_separator()
         self.filemenu.add_command(label="Exit", command=self.myGUI.quit)
         self.menubar.add_cascade(label="File", menu=self.filemenu)
