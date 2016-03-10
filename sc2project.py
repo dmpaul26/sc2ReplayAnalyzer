@@ -1,8 +1,4 @@
-import sys
-from Tkinter import *
-from TkHandler import *
-
-programState = 2
+from TkHandler import TkHandler
 
 myHandler = TkHandler()
 
