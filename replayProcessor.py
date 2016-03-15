@@ -9,6 +9,7 @@ class ReplayProcessor():
 
     def initReplayInfo(self):
         self.updatePlayerInfo()
+        self.updateGameInfo()
 
     ## Updates player info panes
     def updatePlayerInfo(self):
@@ -18,3 +19,8 @@ class ReplayProcessor():
             elif player.team is self.replay.teams[1]:
                 self.TkHandler.playerTwoInfo.config(text=player.name)
 
+    def updateGameInfo(self):
+        timeSecs = self.replay.game_length.seconds #gives game time, not real time
+        formattedTime = str(timeSecs/60), ":", str(timeSecs%60)
+
+        self.TkHandler.gameInfo.config(text=formattedTime)

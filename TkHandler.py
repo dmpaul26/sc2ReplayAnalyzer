@@ -73,7 +73,7 @@ class TkHandler():
         self.mapLabel = Label(self.gameInfoFrame, image=self.minimapImage, height=200)
         self.mapLabel.pack(side=TOP)
 
-        self.gameInfo = Label(self.gameInfoFrame, text="Game Info", fg="white", bg="red")
+        self.gameInfo = Label(self.gameInfoFrame, text="Game Info")
         self.gameInfo.pack(side=BOTTOM, fill=Y, expand=YES)
 
     def initHeader(self):

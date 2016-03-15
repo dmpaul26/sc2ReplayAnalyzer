@@ -7,18 +7,6 @@ class ReplayImporter():
 
     def __init__(self, TkHandler):
         self.parent = TkHandler
-        # if matchID:
-        #
-        # else:
-        #     try:
-        #         url = 'http://api.ggtracker.com/api/v1/matches?category=Ladder&game_type=1v1&identity_id=' + userID
-        #
-        #         request = Request(url)
-        #         self.lastTen = urlopen(request)
-        #
-        #     except URLError, e:
-        #         print "Didn't load, error: ", e
-        #         self.replay = sc2reader.load_replay('SC2Replay.SC2Replay')
 
     def loadReplay(self):
         file_opt = {'defaultextension': '.SC2Replay',
@@ -31,6 +19,7 @@ class ReplayImporter():
 
             self.replayProcessor = ReplayProcessor(self.parent, self.replay)
 
+    # TODO: Add get replay from matchID
     def getReplay(self):
         try:
             url = Request('http://api.ggtracker.com/api/v1/matches?category=Ladder&game_type=1v1&identity_id=' + self.userID +
@@ -45,7 +34,6 @@ class ReplayImporter():
 
     def promptUserID(self):
         self.promptID = Toplevel(self.parent.myGUI)
-        self.promptID.transient(self.parent.myGUI)
 
         Label(self.promptID, text="Enter GGTracker user ID:").pack()
 
@@ -57,22 +45,14 @@ class ReplayImporter():
 
         self.promptID.bind("<Return>", self.getUserID)
 
-        self.promptID.grab_set()
+        self.promptID.grab_set() #not sure if  this does anything
 
-    def getUserID(self):
+    def getUserID(self, event=0):   #bind passes key as a second argument, event used as placeholder
         self.userID = self.userEntry.get()
         self.promptID.destroy()
         self.getReplay()
 
-    ## Updates player info panes, playerPID = ID of player, num is their player # for current replay
-    def updatePlayerInfo(self):
-        for player in self.replay.players:
-            if player.team is self.replay.teams[0]:
-                self.parent.playerOneInfo.config(text=player.name)
-            elif player.team is self.replay.teams[1]:
-                self.parent.playerTwoInfo.config(text=player.name)
-
-    def getRecentMatch(self, page):
+    def getRecentMatch(self, page): #processes the most recent 1v1 ranked match
         page_json = json.loads(page.read())
 
         replayURL = page_json['collection'][0]['replays'][0]['url']
