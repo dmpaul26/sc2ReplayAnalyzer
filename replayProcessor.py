@@ -11,6 +11,7 @@ class ReplayProcessor():
         self.getArmy()
         self.updatePlayerInfo()
         self.updateGameInfo()
+        self.updateStats()
 
     ## Updates player info panes
     def updatePlayerInfo(self):
@@ -33,6 +34,7 @@ class ReplayProcessor():
                 self.TkHandler.playerTwoInfo.config(text=player.name, bg="#" + player.color.hex, fg="white")
                 self.TkHandler.playerTwoDetails.config(bg="#" + player.color.hex, fg="white")
                 self.TkHandler.playerTwoDetailsHeader.config(text=player.name + " Army")
+
     def updateGameInfo(self):
 
         #TODO: Grab map image from internet
@@ -40,6 +42,11 @@ class ReplayProcessor():
         formattedTime = "Match Duration {}:{}".format(str(timeSecs/60), str(timeSecs%60))
 
         self.TkHandler.gameInfo.config(text=formattedTime)
+
+    def updateStats(self):
+        for player in self.replay.players:
+            self.TkHandler.scrollStats.insert(END, player.name)
+            self.TkHandler.scrollStats.insert(END, "Army size = ", str(self.getArmySize(player)))
 
     #TODO: Get unit create/killed times
     def getArmy(self):
@@ -53,3 +60,6 @@ class ReplayProcessor():
                 playerArmy.append(unit.name)
 
             self.army_map[player] = playerArmy
+
+    def getArmySize(self, player):
+        return len(self.army_map[player])
