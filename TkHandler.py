@@ -10,6 +10,7 @@ class TkHandler():
 
     def __init__(self):
         self.myGUI = Tk()
+        self.myGUI.title('Sc2ReplayAnalyzer')
         self.myGUI.geometry('1024x768')
 
         self.replayImporter = ReplayImporter(self)
@@ -96,6 +97,8 @@ class TkHandler():
         self.playerOneDetails = Listbox(self.playerOneDetailsFrame, font=detailsFont, yscrollcommand=playerOneScrollbar.set)
         self.playerOneDetails.pack(side=BOTTOM, fill=BOTH, expand=YES)
 
+        playerOneScrollbar.config(command=self.playerOneDetails.yview)
+
         self.playerTwoDetailsFrame = Frame(self.gameDetails)
         self.playerTwoDetailsFrame.pack(side=LEFT, fill=BOTH, expand=YES)
 
@@ -108,6 +111,8 @@ class TkHandler():
         self.playerTwoDetails = Listbox(self.playerTwoDetailsFrame, font=detailsFont, yscrollcommand=playerTwoScrollbar.set)
         self.playerTwoDetails.pack(side=BOTTOM, fill=BOTH, expand=YES)
 
+        playerTwoScrollbar.config(command=self.playerTwoDetails.yview)
+
     def initStats(self):
         self.statsFrame = Frame(self.myGUI)
         self.statsFrame.pack(side=RIGHT, fill=Y)
@@ -118,5 +123,4 @@ class TkHandler():
         scrollbar.pack(side=RIGHT, fill=Y)
 
         self.scrollStats = Listbox(self.statsFrame, yscrollcommand=scrollbar.set, width = 50)
-        self.scrollStats.insert(END, "APM = 55")
         self.scrollStats.pack(side=BOTTOM, fill=Y, expand=YES)
