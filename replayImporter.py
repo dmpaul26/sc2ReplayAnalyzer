@@ -33,19 +33,18 @@ class ReplayImporter():
 
 
     def promptUserID(self):
-        self.promptID = Toplevel(self.parent.myGUI)
+        self.promptID = Toplevel(self.parent.myGUI, takefocus=True)
 
         Label(self.promptID, text="Enter GGTracker user ID:").pack()
 
         self.userEntry = Entry(self.promptID)
         self.userEntry.pack(padx=5)
+        self.userEntry.focus()
 
         Button(self.promptID, text="Ok", command=self.getUserID, default=ACTIVE).pack(pady=5)
         Button(self.promptID, text="Cancel", command=self.promptID.destroy).pack()
 
         self.promptID.bind("<Return>", self.getUserID)
-
-        self.promptID.grab_set() #not sure if  this does anything
 
     def getUserID(self, event=0):   #bind passes key as a second argument, event used as placeholder
         self.userID = self.userEntry.get()
